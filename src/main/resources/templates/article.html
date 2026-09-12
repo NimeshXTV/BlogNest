@@ -24,7 +24,15 @@
         Article content
     </div>
 
-    <a class="back-link" href="/">
+    <a th:if="${fromAdmin}"
+       href="/admin"
+       class="back-link">
+        ← Back to Admin
+    </a>
+
+    <a th:unless="${fromAdmin}"
+       href="/"
+       class="back-link">
         ← Back to Home
     </a>
 

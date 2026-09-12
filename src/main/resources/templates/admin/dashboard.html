@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Admin Dashboard</h1>
+
+    <a href="/admin/new">+ New Article</a>
+
+    <div class="article-list">
+
+        <div class="article-item" th:each="article : ${articles}">
+
+            <div>
+                <a class="article-title"
+                   th:href="@{/articles/{id}(id=${article.id},from='admin')}"
+                   th:text="${article.title}">
+                    Article title
+                </a>
+
+                <span class="article-date"
+                      th:text="${article.publicationDate}">
+                    Publication date
+                </span>
+            </div>
+
+            <div>
+                <a th:href="@{/admin/edit/{id}(id=${article.id})}">
+                    Edit
+                </a>
+
+                <button type="button"
+                        class="delete-button"
+                        th:attr="data-id=${article.id},data-title=${article.title}">
+                    Delete
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+
+        <div class="modal-content">
+
+            <h2>Delete Article?</h2>
+
+            <p>
+                Are you sure you want to delete
+                <strong id="deleteArticleTitle"></strong>?
+            </p>
+
+            <div class="modal-actions">
+
+                <button type="button" id="cancelDelete">
+                    Cancel
+                </button>
+
+                <form id="deleteForm" method="post">
+
+                    <input type="hidden"
+                           name="_csrf"
+                           th:value="${_csrf.token}">
+
+                    <button type="submit" class="delete-button">
+                        Delete
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    const deleteButtons = document.querySelectorAll(".article-item .delete-button");
+    const deleteModal = document.getElementById("deleteModal");
+    const cancelDelete = document.getElementById("cancelDelete");
+    const deleteForm = document.getElementById("deleteForm");
+    const deleteArticleTitle = document.getElementById("deleteArticleTitle");
+
+    deleteButtons.forEach(button => {
+        button.addEventListener("click", () => {
+
+            const articleId = button.dataset.id;
+            const articleTitle = button.dataset.title;
+
+            deleteArticleTitle.textContent = articleTitle;
+            deleteForm.action = `/admin/delete/${articleId}`;
+
+            deleteModal.classList.add("show");
+        });
+    });
+
+    cancelDelete.addEventListener("click", () => {
+        deleteModal.classList.remove("show");
+    });
+</script>
+
+</body>
+</html>
