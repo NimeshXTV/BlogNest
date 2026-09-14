@@ -1,4 +1,4 @@
-# Personal Blog
+# BlogNest - Personal Blogging Platform
 
 A server-rendered personal blogging web application built with Java and Spring Boot.
 
