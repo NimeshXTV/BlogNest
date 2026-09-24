@@ -91,4 +91,10 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    @PostMapping("admin/pin/{id}")
+    public String togglePinArticle(@PathVariable Long id){
+        articleService.togglePinArticle(id);
+        return "redirect:/admin";
+    }
+
 }

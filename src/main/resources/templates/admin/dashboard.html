@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
     <meta charset="UTF-8">
+
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <link rel="icon"
+          type="image/png"
+          th:href="@{/images/logo.png}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
 </head>
 
 <body>
@@ -12,13 +22,17 @@
 
     <h1>Admin Dashboard</h1>
 
-    <a href="/admin/new">+ New Article</a>
+    <a href="/admin/new">
+        + New Article
+    </a>
 
     <div class="article-list">
 
-        <div class="article-item" th:each="article : ${articles}">
+        <div class="article-item"
+             th:each="article : ${articles}">
 
             <div>
+
                 <a class="article-title"
                    th:href="@{/articles/{id}(id=${article.id},from='admin')}"
                    th:text="${article.title}">
@@ -29,30 +43,82 @@
                       th:text="${article.publicationDate}">
                     Publication date
                 </span>
+
             </div>
 
-            <div>
-                <a th:href="@{/admin/edit/{id}(id=${article.id})}">
+            <div class="article-actions">
+
+                <a class="edit-button"
+                   th:href="@{/admin/edit/{id}(id=${article.id})}">
                     Edit
                 </a>
 
+                <!-- Pin / Unpin -->
+                <form th:action="@{/admin/pin/{id}(id=${article.id})}"
+                      method="post"
+                      class="pin-form">
+
+                    <input type="hidden"
+                           name="_csrf"
+                           th:value="${_csrf.token}">
+
+                    <button type="submit"
+                            class="pin-button"
+                            th:title="${article.pinned ? 'Unpin article' : 'Pin article'}"
+                            th:attr="aria-label=${article.pinned ? 'Unpin article' : 'Pin article'}">
+
+                        <!-- Unpinned -->
+                        <svg th:if="${!article.pinned}"
+                             class="pin-icon"
+                             viewBox="0 0 24 24"
+                             aria-hidden="true">
+
+                            <path d="M16 9V4H17V2H7V4H8V9C8 10.66 6.66 12 5 12V14H10.97V21L12 22L13.03 21V14H19V12C17.34 12 16 10.66 16 9Z"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  stroke-width="1.8"
+                                  stroke-linejoin="round"/>
+
+                        </svg>
+
+                        <!-- Pinned -->
+                        <svg th:if="${article.pinned}"
+                             class="pin-icon"
+                             viewBox="0 0 24 24"
+                             aria-hidden="true">
+
+                            <path d="M16 9V4H17V2H7V4H8V9C8 10.66 6.66 12 5 12V14H10.97V21L12 22L13.03 21V14H19V12C17.34 12 16 10.66 16 9Z"
+                                  fill="currentColor"/>
+
+                        </svg>
+
+                    </button>
+
+                </form>
+
+                <!-- Delete -->
                 <button type="button"
                         class="delete-button"
                         th:attr="data-id=${article.id},data-title=${article.title}">
                     Delete
                 </button>
+
             </div>
 
         </div>
 
     </div>
 
+
     <!-- Delete Confirmation Modal -->
-    <div id="deleteModal" class="modal">
+    <div id="deleteModal"
+         class="modal">
 
         <div class="modal-content">
 
-            <h2>Delete Article?</h2>
+            <h2>
+                Delete Article?
+            </h2>
 
             <p>
                 Are you sure you want to delete
@@ -61,17 +127,20 @@
 
             <div class="modal-actions">
 
-                <button type="button" id="cancelDelete">
+                <button type="button"
+                        id="cancelDelete">
                     Cancel
                 </button>
 
-                <form id="deleteForm" method="post">
+                <form id="deleteForm"
+                      method="post">
 
                     <input type="hidden"
                            name="_csrf"
                            th:value="${_csrf.token}">
 
-                    <button type="submit" class="delete-button">
+                    <button type="submit"
+                            class="delete-button">
                         Delete
                     </button>
 
@@ -86,28 +155,52 @@
 </div>
 
 <script>
-    const deleteButtons = document.querySelectorAll(".article-item .delete-button");
-    const deleteModal = document.getElementById("deleteModal");
-    const cancelDelete = document.getElementById("cancelDelete");
-    const deleteForm = document.getElementById("deleteForm");
-    const deleteArticleTitle = document.getElementById("deleteArticleTitle");
+
+    const deleteButtons =
+        document.querySelectorAll(".article-item .delete-button");
+
+    const deleteModal =
+        document.getElementById("deleteModal");
+
+    const cancelDelete =
+        document.getElementById("cancelDelete");
+
+    const deleteForm =
+        document.getElementById("deleteForm");
+
+    const deleteArticleTitle =
+        document.getElementById("deleteArticleTitle");
+
 
     deleteButtons.forEach(button => {
+
         button.addEventListener("click", () => {
 
-            const articleId = button.dataset.id;
-            const articleTitle = button.dataset.title;
+            const articleId =
+                button.dataset.id;
 
-            deleteArticleTitle.textContent = articleTitle;
-            deleteForm.action = `/admin/delete/${articleId}`;
+            const articleTitle =
+                button.dataset.title;
+
+            deleteArticleTitle.textContent =
+                articleTitle;
+
+            deleteForm.action =
+                `/admin/delete/${articleId}`;
 
             deleteModal.classList.add("show");
+
         });
+
     });
 
+
     cancelDelete.addEventListener("click", () => {
+
         deleteModal.classList.remove("show");
+
     });
+
 </script>
 
 </body>

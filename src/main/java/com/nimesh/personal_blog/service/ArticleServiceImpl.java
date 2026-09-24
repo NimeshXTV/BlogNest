@@ -15,11 +15,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ArticleServiceImpl implements ArticleService{
     private final ArticleRepository articleRepository;
+    private final HtmlSanitizer htmlSanitizer;
 
     @Override
     public List<ArticleResponse> getAllArticles() {
-        return articleRepository.findAll().stream().map(article -> new ArticleResponse(
-                article.getId(), article.getTitle(), article.getContent(), article.getPublicationDate()
+        return articleRepository.findAllByOrderByPinnedDescPublicationDateAscIdAsc().stream().map(article -> new ArticleResponse(
+                article.getId(), article.getTitle(), article.getContent(), article.getPublicationDate(), article.isPinned()
         ))
                 .toList();
     }
@@ -36,7 +37,8 @@ public class ArticleServiceImpl implements ArticleService{
                 article.getId(),
                 article.getTitle(),
                 article.getContent(),
-                article.getPublicationDate()
+                article.getPublicationDate(),
+                article.isPinned()
         );
     }
 
@@ -45,7 +47,7 @@ public class ArticleServiceImpl implements ArticleService{
         Article article = new Article();
 
         article.setTitle(articleRequest.getTitle());
-        article.setContent(articleRequest.getContent());
+        article.setContent(htmlSanitizer.sanitize(articleRequest.getContent()));
         article.setPublicationDate(LocalDate.now());
 
         Article savedArticle = articleRepository.save(article);
@@ -54,7 +56,8 @@ public class ArticleServiceImpl implements ArticleService{
                 savedArticle.getId(),
                 savedArticle.getTitle(),
                 savedArticle.getContent(),
-                savedArticle.getPublicationDate()
+                savedArticle.getPublicationDate(),
+                savedArticle.isPinned()
         );
     }
 
@@ -66,15 +69,15 @@ public class ArticleServiceImpl implements ArticleService{
                 );
 
         article.setTitle(articleRequest.getTitle());
-        article.setContent(articleRequest.getContent());
-
+        article.setContent(htmlSanitizer.sanitize(articleRequest.getContent()));
         Article updatedArticle = articleRepository.save(article);
 
         return new ArticleResponse(
                 updatedArticle.getId(),
                 updatedArticle.getTitle(),
                 updatedArticle.getContent(),
-                updatedArticle.getPublicationDate()
+                updatedArticle.getPublicationDate(),
+                updatedArticle.isPinned()
         );
     }
 
@@ -86,5 +89,16 @@ public class ArticleServiceImpl implements ArticleService{
                 );
 
         articleRepository.delete(article);
+    }
+
+    @Override
+    public void togglePinArticle(Long id) {
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() ->
+                        new ArticleNotFoundException("Article not found with id: " + id)
+                );
+
+        article.setPinned(!article.isPinned());
+        articleRepository.save(article);
     }
 }

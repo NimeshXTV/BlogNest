@@ -13,4 +13,5 @@ public interface ArticleService {
     ArticleResponse createArticle(ArticleRequest articleRequest);
     ArticleResponse updateArticle(Long id,ArticleRequest articleRequest);
     void deleteArticle(Long id);
+    void togglePinArticle(Long id);
 }

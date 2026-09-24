@@ -14,4 +14,5 @@ public class ArticleResponse {
     private String title;
     private String content;
     private LocalDate publicationDate;
+    private boolean pinned;
 }

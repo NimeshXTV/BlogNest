@@ -16,10 +16,17 @@ h1 {
     margin-bottom: 35px;
 }
 
+
+/* =========================
+   Article List
+   ========================= */
+
 .article-list {
     border: 3px solid #222;
     border-radius: 10px;
     padding: 25px 40px;
+    background-color: #fff;
+    box-shadow: 8px 8px 0 #222;
 }
 
 .article-item {
@@ -27,13 +34,28 @@ h1 {
     justify-content: space-between;
     align-items: center;
     padding: 14px 0;
+    border-bottom: 2px dashed #9aa3ad;
+}
+
+.article-item:last-child {
+    border-bottom: none;
+}
+
+.article-item > div:first-child {
+    min-width: 0;
 }
 
 .article-title {
+    display: inline-block;
+    margin-right: 12px;
     font-size: 24px;
     font-weight: bold;
     text-decoration: none;
     color: #222;
+}
+
+.article-title:hover {
+    text-decoration: underline;
 }
 
 .article-date {
@@ -43,31 +65,111 @@ h1 {
 }
 
 
-/* Article page */
+/* =========================
+   Article Page
+   ========================= */
 
 .article-page {
     max-width: 900px;
 }
 
 .article-page h1 {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    font-size: 48px;
+    line-height: 1.15;
 }
 
 .article-page .article-date {
-    margin-bottom: 35px;
+    margin: 0 0 30px;
+    color: #9aa3ad;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .article-content {
-    font-size: 22px;
-    line-height: 1.6;
-    white-space: pre-wrap;
-    margin-bottom: 40px;
+    max-width: 760px;
+    margin: 25px auto 0;
+    font-family: inherit;
+    font-size: 18px;
+    line-height: 1.55;
+    color: #222;
 }
 
-.back-link {
-    font-size: 18px;
-    font-weight: bold;
+.article-content p {
+    margin: 0 0 10px;
+}
+
+.article-content h1,
+.article-content h2,
+.article-content h3 {
+    margin: 28px 0 12px;
+    line-height: 1.25;
+}
+
+.article-content h1 {
+    font-size: 36px;
+}
+
+.article-content h2 {
+    font-size: 30px;
+}
+
+.article-content h3 {
+    font-size: 24px;
+}
+
+.article-content ul,
+.article-content ol {
+    margin: 8px 0 14px;
+    padding-left: 30px;
+}
+
+/* Quill bullet lists */
+.article-content ol li[data-list="bullet"] {
+    list-style-type: disc;
+}
+
+.article-content li {
+    margin-bottom: 5px;
+}
+
+.article-content blockquote {
+    margin: 20px 0;
+    padding-left: 18px;
+    border-left: 4px solid #222;
+    font-style: italic;
+}
+
+.article-content a {
     color: #222;
+    font-weight: bold;
+}
+
+.article-content pre {
+    margin: 20px 0;
+    padding: 16px;
+    overflow-x: auto;
+    border: 2px solid #222;
+    border-radius: 8px;
+    background-color: #f1f1f1;
+}
+
+.article-content code {
+    font-family: monospace;
+}
+
+
+/* =========================
+   Back Links
+   ========================= */
+
+.back-link {
+    display: inline-block;
+    margin-top: 30px;
+    color: #222;
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: bold;
     text-decoration: none;
 }
 
@@ -76,54 +178,86 @@ h1 {
 }
 
 
-/* Validation errors */
+/* =========================
+   Admin Dashboard
+   ========================= */
 
-.error-message {
-    color: red;
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 6px;
-}
-
-
-/* Admin article actions
-
-.article-item > div:last-child {
+.article-actions {
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: 14px;
 }
 
-.article-item > div:last-child a {
+.edit-button {
+    display: inline-block;
+    border: 2px solid #222;
+    border-radius: 6px;
+    background-color: #fff;
     color: #222;
-    font-size: 18px;
+    padding: 7px 12px;
+    font-family: inherit;
+    font-size: 16px;
     font-weight: bold;
     text-decoration: none;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 #222;
 }
 
-.article-item > div:last-child a:hover {
-    text-decoration: underline;
+.edit-button:hover {
+    background-color: #222;
+    color: #fff;
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 #222;
 }
 
 .delete-button {
     border: 2px solid #222;
     border-radius: 6px;
-    background: transparent;
+    background-color: #fff;
     color: #222;
     padding: 7px 12px;
     font-family: inherit;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
+    box-shadow: 3px 3px 0 #222;
 }
 
 .delete-button:hover {
     background-color: #222;
-    color: white;
+    color: #fff;
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 #222;
 }
 
 
-/* Delete confirmation modal */
+/* =========================
+   New Article Button
+   ========================= */
+
+.container > a[href="/admin/new"] {
+    display: inline-block;
+    margin-bottom: 25px;
+    border: 3px solid #222;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #222;
+    padding: 10px 16px;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 4px 4px 0 #9aa3ad;
+}
+
+.container > a[href="/admin/new"]:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 #9aa3ad;
+}
+
+
+/* =========================
+   Delete Modal
+   ========================= */
 
 .modal {
     display: none;
@@ -158,6 +292,10 @@ h1 {
     line-height: 1.5;
 }
 
+.modal-content strong {
+    word-break: break-word;
+}
+
 .modal-actions {
     display: flex;
     justify-content: flex-end;
@@ -168,6 +306,10 @@ h1 {
 
 .modal-actions button {
     min-width: 90px;
+}
+
+.modal-actions #deleteForm {
+    margin: 0;
 }
 
 #cancelDelete {
@@ -184,4 +326,242 @@ h1 {
 
 #cancelDelete:hover {
     background-color: #e5e7eb;
+}
+
+.modal-actions .delete-button {
+    background-color: #222;
+    color: #fff;
+}
+
+.modal-actions .delete-button:hover {
+    background-color: transparent;
+    color: #222;
+}
+
+
+/* =========================
+   Admin Article Forms
+   ========================= */
+
+.admin-form-page {
+    max-width: 900px;
+}
+
+.admin-form-page h1 {
+    margin-bottom: 30px;
+}
+
+.article-form {
+    border: 3px solid #222;
+    border-radius: 12px;
+    padding: 30px 35px;
+    background-color: #fff;
+    box-shadow: 8px 8px 0 #222;
+}
+
+.form-group {
+    margin-bottom: 28px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #222;
+    border-radius: 8px;
+    padding: 12px 14px;
+    background-color: #f8f9fa;
+    color: #222;
+    font-family: inherit;
+    font-size: 18px;
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    box-shadow: 4px 4px 0 #222;
+}
+
+.form-group textarea {
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #9aa3ad;
+}
+
+
+/* =========================
+   Quill Editor
+   ========================= */
+
+#editor {
+    border: 2px solid #222;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    overflow: hidden;
+}
+
+#editor .ql-toolbar {
+    border: none;
+    border-bottom: 2px solid #222;
+    background-color: #fff;
+    font-family: inherit;
+}
+
+#editor .ql-container {
+    border: none;
+    font-family: inherit;
+    font-size: 18px;
+}
+
+#editor .ql-editor {
+    min-height: 300px;
+    font-family: inherit;
+    font-size: 18px;
+    line-height: 1.55;
+    color: #222;
+}
+
+#editor .ql-editor p {
+    margin: 0;
+}
+
+#editor .ql-editor ul,
+#editor .ql-editor ol {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 15px;
+}
+
+#editor .ql-editor li {
+    margin-bottom: 0;
+}
+
+#editor .ql-editor li:not(.ql-direction-rtl)::before {
+    margin-left: -1em;
+    margin-right: 0.2em;
+    width: 1em;
+}
+
+#editor .ql-editor.ql-blank::before {
+    color: #9aa3ad;
+    font-family: inherit;
+    font-style: normal;
+}
+
+
+/* =========================
+   Validation Errors
+   ========================= */
+
+.error-message {
+    margin: 8px 0 0;
+    color: #d62828;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+
+/* =========================
+   Submit Button
+   ========================= */
+
+.form-submit {
+    border: 3px solid #222;
+    border-radius: 8px;
+    background-color: #222;
+    color: white;
+    padding: 10px 18px;
+    font-family: inherit;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 #9aa3ad;
+}
+
+.form-submit:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 #9aa3ad;
+}
+
+
+/* =========================
+   Pin Icon
+   ========================= */
+
+.pin-form {
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+}
+
+.pin-button {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: #222;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.pin-button:hover {
+    transform: scale(1.1);
+}
+
+.pin-icon {
+    width: 25px;
+    height: 25px;
+    display: block;
+}
+
+.pin-button:focus-visible {
+    outline: 2px solid #222;
+    outline-offset: 3px;
+}
+
+/* =========================
+   Site Header
+   ========================= */
+
+.site-header {
+    max-width: 900px;
+    margin: 0 auto 35px;
+    display: flex;
+    align-items: center;
+}
+
+.site-logo-link {
+    display: inline-flex;
+    text-decoration: none;
+    line-height: 0;
+}
+
+.site-logo {
+    width: 58px;
+    height: 58px;
+    object-fit: cover;
+    display: block;
+    border-radius: 8px;
+    box-shadow: 4px 4px 0 #222;
+}
+
+.site-logo-link:hover .site-logo {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 #222;
 }

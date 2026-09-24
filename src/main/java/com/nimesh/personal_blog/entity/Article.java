@@ -26,4 +26,6 @@ public class Article {
     private String content;
 
     private LocalDate publicationDate;
+
+    private boolean pinned = false;
 }
